@@ -3,23 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aubigine Quin</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap"
-    rel="stylesheet"
-  />
+  <title>Aubergine Quin</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="hero">
-    <!-- Drop your SVG into assets/ and point this at it, or paste the inline <svg> here -->
-    <div class="hero__graphic" aria-hidden="true">
-      <!-- <img src="assets/your-graphic.svg" alt="" /> -->
-    </div>
+  <canvas class="halftone" id="halftone" aria-hidden="true"></canvas>
 
-    <h1 class="hero__title" id="title">Aubigine Quin</h1>
+  <main class="hero">
+    <h1 class="hero__title" id="title">
+      <span class="visually-hidden">Aubergine Quin</span>
+    </h1>
   </main>
 
   <label class="colour-picker">
@@ -27,6 +23,7 @@
     <input type="color" id="font-colour" value="#000000" />
   </label>
 
+  <script src="halftone.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
