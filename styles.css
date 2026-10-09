@@ -170,6 +170,50 @@ body {
   outline-offset: 3px;
 }
 
+/* Early-2000s Google homepage buttons (classic Windows bevel);
+   remove .contact--google in index.html to revert */
+.contact--google {
+  gap: 6px;
+}
+
+.contact--google .contact__button {
+  position: relative;
+  padding: 4px 10px 5px;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.2;
+  letter-spacing: normal;
+  color: #000;
+  background-color: #d4d0c8;
+  border: none;
+  border-radius: 0;
+  box-shadow:
+    inset -1px -1px #404040,
+    inset 1px 1px #fff,
+    inset -2px -2px #808080,
+    inset 2px 2px #e8e6e0;
+  transition: none;
+}
+
+.contact--google .contact__button:hover {
+  color: #000;
+  background-color: #d4d0c8;
+}
+
+.contact--google .contact__button:active {
+  padding: 5px 9px 4px 11px;
+  box-shadow:
+    inset 1px 1px #404040,
+    inset -1px -1px #fff,
+    inset 2px 2px #808080,
+    inset -2px -2px #e8e6e0;
+}
+
+.contact--google .contact__button:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: -5px;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
