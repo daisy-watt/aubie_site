@@ -1,0 +1,102 @@
+:root {
+  --font-colour: #000000;
+  --paper: #f7f6f3;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  background-color: var(--paper);
+  background-image: url("assets/paper-texture.webp");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: var(--font-colour);
+  -webkit-font-smoothing: antialiased;
+}
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+}
+
+.hero__graphic {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.hero__graphic img,
+.hero__graphic svg {
+  max-width: min(80vw, 900px);
+  max-height: 80vh;
+}
+
+.hero__title {
+  position: relative;
+  font-size: clamp(3rem, 11vw, 10rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: var(--font-colour);
+  transition: color 0.2s ease;
+}
+
+.colour-picker {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.95rem;
+  color: #222;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+}
+
+.colour-picker input[type="color"] {
+  width: 1.75rem;
+  height: 1.75rem;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.colour-picker input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.colour-picker input[type="color"]::-webkit-color-swatch {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+}
+
+.colour-picker input[type="color"]::-moz-color-swatch {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+}
