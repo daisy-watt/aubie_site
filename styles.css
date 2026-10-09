@@ -18,7 +18,8 @@ body {
 }
 
 html {
-  cursor: url("assets/cursor.svg") 9 4, auto;
+  cursor: url("assets/cursor.svg") 8 3, auto;
+  cursor: image-set(url("assets/cursor.svg") 1x, url("assets/cursor@2x.svg") 2x) 8 3, auto;
 }
 
 body {
@@ -38,8 +39,11 @@ body {
 
 .hero {
   min-height: 100vh;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(2rem, 5vw, 3.5rem);
   padding: 2rem;
 }
 
@@ -59,30 +63,38 @@ body {
   transition: background-color 0.2s ease;
 }
 
-/* Full stop: rests 3cm above the baseline (y = 138.5), just past the final N's tail */
+/* Full stop: rests 3cm above the baseline (y = 138.5) past the final N's tail,
+   then 1cm due south-west (0.7071cm on each axis) */
 .wordmark__stop {
   --size: 2.3cqw;
   --dx: 0px;
   --dy: 0px;
   --scale: 1;
   position: absolute;
-  left: calc(100% + 1.1cqw);
-  top: calc(12.31cqw - var(--size) - 3cm);
+  left: calc(100% + 1.1cqw - 0.7071cm);
+  top: calc(12.31cqw - var(--size) - 3cm + 0.7071cm);
   width: var(--size);
   height: var(--size);
   min-width: 12px;
   min-height: 12px;
   border-radius: 50%;
-  overflow: hidden;
   outline: 1.5px solid var(--font-colour);
   outline-offset: 4px;
   touch-action: none;
   user-select: none;
   transform: translate(var(--dx), var(--dy)) scale(var(--scale));
   transition:
-    transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 0.2s ease,
     outline-offset 0.2s ease,
     outline-width 0.2s ease;
+}
+
+/* Larger invisible grab area around the small dot */
+.wordmark__stop::before {
+  content: "";
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
 }
 
 .wordmark__stop:hover {
@@ -123,6 +135,39 @@ body {
 .wordmark__stop input[type="color"]::-moz-color-swatch {
   border: none;
   border-radius: 50%;
+}
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.contact__button {
+  padding: 0.7rem 1.4rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  color: var(--font-colour);
+  text-decoration: none;
+  background: rgba(251, 251, 249, 0.7);
+  border: 1.5px solid var(--font-colour);
+  border-radius: 6px;
+  cursor: inherit;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.contact__button:hover {
+  color: var(--paper);
+  background-color: var(--font-colour);
+}
+
+.contact__button:focus-visible {
+  outline: 2px solid var(--font-colour);
+  outline-offset: 3px;
 }
 
 .visually-hidden {

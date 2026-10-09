@@ -9,19 +9,25 @@ const A_PATH =
   "M1.65,159.15l14.21-21.6c7.86,16.08,16.41,25.17,23.31,25.17,7.86,0,10.07-24.2,13.65-38.33,4.41-18.19,13.1-32.65,31.45-36.06l-.14-.33c-16,0-40.96-9.42-53.1-26.96l13.1-22.58c9.79,26.31,25.38,46.29,39.45,48.56-9.52-14.29-13.38-26.96-13.38-37.19,0-15.92,9.24-25.66,20-25.66,9.52,0,20.27,7.8,26.34,25.66l31.03,90.79h-27.58l-17.38-51h-2.07c-11.03,0-17.52,17.22-20.14,34.76-5.79,27.45-23.58,41.42-49.79,41.42-9.65,0-19.72-2.11-28.96-6.66ZM102.05,88.01l-13.38-38.98c-2.9-8.28-6.76-12.02-10.07-12.02-3.86,0-7.17,5.04-7.17,13.48,0,9.09,3.72,22.09,14.07,37.52h16.55Z";
 
 // Square viewBoxes around the A's bounds (1.5, 24.25, 146 x 141.75)
-const CURSOR_VIEWBOX = "-7.5 13.125 164 164";
-const CURSOR_HOTSPOT = "9 4";
+const CURSOR_VIEWBOX = "-0.5 20.125 150 150";
+const CURSOR_HOTSPOT = "8 3";
 const FAVICON_VIEWBOX = "-2.5 18.125 154 154";
 
 function svgUrl(svg) {
   return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
 }
 
+function cursorSvg(colour, px) {
+  return (
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${px}" height="${px}" viewBox="${CURSOR_VIEWBOX}">` +
+    `<path d="${A_PATH}" fill="${colour}"/></svg>`
+  );
+}
+
 function applyCursor(colour) {
-  const svg =
-    `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="${CURSOR_VIEWBOX}">` +
-    `<path d="${A_PATH}" fill="${colour}" stroke="#fff" stroke-width="8" stroke-linejoin="round" paint-order="stroke"/></svg>`;
-  root.style.cursor = `${svgUrl(svg)} ${CURSOR_HOTSPOT}, auto`;
+  root.style.cursor =
+    `image-set(${svgUrl(cursorSvg(colour, 28))} 1x, ${svgUrl(cursorSvg(colour, 56))} 2x) ` +
+    `${CURSOR_HOTSPOT}, auto`;
 }
 
 // Browsers often ignore href changes on an existing icon link, so swap in a new one
@@ -60,23 +66,30 @@ input.addEventListener("input", (e) => {
   localStorage.setItem(STORAGE_KEY, e.target.value);
 });
 
-// Drag the full stop around; a plain click still opens the picker.
-const RETURN_TO_REST = true;
+// Drag the full stop anywhere on screen; a plain click still opens the picker.
 const DRAG_THRESHOLD = 4;
 const stop = document.querySelector(".wordmark__stop");
+const offset = { x: 0, y: 0 };
 let drag = null;
 let suppressClick = false;
+
+const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 
 stop.addEventListener("pointerdown", (e) => {
   if (e.button !== 0) return;
   suppressClick = false;
-  const style = getComputedStyle(stop);
+  stop.setPointerCapture(e.pointerId);
+  const rect = stop.getBoundingClientRect();
   drag = {
     id: e.pointerId,
     startX: e.clientX,
     startY: e.clientY,
-    baseX: parseFloat(style.getPropertyValue("--dx")) || 0,
-    baseY: parseFloat(style.getPropertyValue("--dy")) || 0,
+    baseX: offset.x,
+    baseY: offset.y,
+    minX: offset.x - rect.left,
+    maxX: offset.x + (window.innerWidth - rect.right),
+    minY: offset.y - rect.top,
+    maxY: offset.y + (window.innerHeight - rect.bottom),
     moved: false,
   };
 });
@@ -88,11 +101,12 @@ stop.addEventListener("pointermove", (e) => {
   if (!drag.moved) {
     if (Math.hypot(dx, dy) < DRAG_THRESHOLD) return;
     drag.moved = true;
-    stop.setPointerCapture(e.pointerId);
     stop.classList.add("is-dragging");
   }
-  stop.style.setProperty("--dx", `${drag.baseX + dx}px`);
-  stop.style.setProperty("--dy", `${drag.baseY + dy}px`);
+  offset.x = clamp(drag.baseX + dx, drag.minX, drag.maxX);
+  offset.y = clamp(drag.baseY + dy, drag.minY, drag.maxY);
+  stop.style.setProperty("--dx", `${offset.x}px`);
+  stop.style.setProperty("--dy", `${offset.y}px`);
 });
 
 function endDrag(e) {
@@ -100,10 +114,6 @@ function endDrag(e) {
   if (drag.moved) {
     suppressClick = true;
     stop.classList.remove("is-dragging");
-    if (RETURN_TO_REST) {
-      stop.style.setProperty("--dx", "0px");
-      stop.style.setProperty("--dy", "0px");
-    }
   }
   drag = null;
 }
