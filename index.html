@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aubergine Quin</title>
+  <title>Aubergine Quin | Ideas </title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png" />
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -13,15 +12,16 @@
   <canvas class="halftone" id="halftone" aria-hidden="true"></canvas>
 
   <main class="hero">
-    <h1 class="hero__title" id="title">
-      <span class="visually-hidden">Aubergine Quin</span>
-    </h1>
+    <div class="wordmark">
+      <h1 class="wordmark__name" id="title">
+        <span class="visually-hidden">Aubergine Quin</span>
+      </h1>
+      <label class="wordmark__stop" title="Change colour">
+        <span class="visually-hidden">Font colour</span>
+        <input type="color" id="font-colour" value="#000000" />
+      </label>
+    </div>
   </main>
-
-  <label class="colour-picker">
-    <span>Font colour</span>
-    <input type="color" id="font-colour" value="#000000" />
-  </label>
 
   <script src="halftone.js"></script>
   <script src="script.js"></script>

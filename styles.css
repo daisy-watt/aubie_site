@@ -1,8 +1,7 @@
 :root {
   --font-colour: #000000;
   --paper: #fbfbf9;
-  /* Swap to assets/aubergine-quin.svg once the vector file is in place */
-  --wordmark: url("assets/aubergine-quin.png");
+  --wordmark: url("assets/aubergine-quin.svg");
 }
 
 *,
@@ -19,8 +18,7 @@ body {
 }
 
 html {
-  cursor: url("assets/cursor.png") 7 7, auto;
-  cursor: image-set(url("assets/cursor.png") 1x, url("assets/cursor@2x.png") 2x) 7 7, auto;
+  cursor: url("assets/cursor.svg") 9 4, auto;
 }
 
 body {
@@ -45,13 +43,71 @@ body {
   padding: 2rem;
 }
 
-.hero__title {
-  width: min(86vw, 1100px);
-  aspect-ratio: 300 / 55;
+/* Wordmark viewBox is 1125 x 207.56, so 1cqw = 11.25 SVG units */
+.wordmark {
+  position: relative;
+  width: min(82vw, 1100px);
+  container-type: inline-size;
+}
+
+.wordmark__name {
+  width: 100%;
+  aspect-ratio: 1125 / 207.56;
   background-color: var(--font-colour);
   -webkit-mask: var(--wordmark) center / contain no-repeat;
   mask: var(--wordmark) center / contain no-repeat;
   transition: background-color 0.2s ease;
+}
+
+/* Full stop: sits on the baseline (y = 138.5) just past the final N's tail */
+.wordmark__stop {
+  --size: 2.3cqw;
+  position: absolute;
+  left: calc(100% + 1.1cqw);
+  top: calc(12.31cqw - var(--size));
+  width: var(--size);
+  height: var(--size);
+  min-width: 12px;
+  min-height: 12px;
+  border-radius: 50%;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.wordmark__stop:hover,
+.wordmark__stop:focus-within {
+  transform: scale(1.25);
+}
+
+.wordmark__stop:focus-within {
+  outline: 2px solid var(--font-colour);
+  outline-offset: 3px;
+}
+
+.wordmark__stop input[type="color"] {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.wordmark__stop input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.wordmark__stop input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+.wordmark__stop input[type="color"]::-moz-color-swatch {
+  border: none;
+  border-radius: 50%;
 }
 
 .visually-hidden {
@@ -61,45 +117,4 @@ body {
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
-}
-
-.colour-picker {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.9rem;
-  color: #222;
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 999px;
-  backdrop-filter: blur(6px);
-  cursor: pointer;
-}
-
-.colour-picker input[type="color"] {
-  width: 1.75rem;
-  height: 1.75rem;
-  border: none;
-  border-radius: 50%;
-  background: none;
-  cursor: pointer;
-  padding: 0;
-}
-
-.colour-picker input[type="color"]::-webkit-color-swatch-wrapper {
-  padding: 0;
-}
-
-.colour-picker input[type="color"]::-webkit-color-swatch {
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 50%;
-}
-
-.colour-picker input[type="color"]::-moz-color-swatch {
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 50%;
 }
