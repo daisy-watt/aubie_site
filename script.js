@@ -62,6 +62,28 @@ input.addEventListener("input", (e) => {
   applyColour(e.target.value);
 });
 
+const copyEmail = document.getElementById("copy-email");
+const copyEmailStatus = document.getElementById("copy-email-status");
+const copyEmailWrap = copyEmail.parentElement;
+let copyStatusTimer;
+
+copyEmail.addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(copyEmail.dataset.email);
+    copyEmailWrap.dataset.tooltip = "Copied!";
+    copyEmailStatus.textContent = "Email copied to clipboard.";
+  } catch (error) {
+    copyEmailWrap.dataset.tooltip = "Copy failed";
+    copyEmailStatus.textContent = "Unable to copy email to clipboard.";
+    console.error("Unable to copy email to clipboard.", error);
+  }
+
+  clearTimeout(copyStatusTimer);
+  copyStatusTimer = setTimeout(() => {
+    copyEmailWrap.dataset.tooltip = "Copy to clipboard";
+  }, 1800);
+});
+
 // Drag the full stop anywhere on screen; a plain click still opens the picker.
 const DRAG_THRESHOLD = 4;
 const stop = document.querySelector(".wordmark__stop");

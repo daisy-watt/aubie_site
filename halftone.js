@@ -84,21 +84,21 @@
     //   s.stroke();
     // }
 
-    const specks = Math.round(area / 8000);
-    for (let i = 0; i < specks; i++) {
-      s.fillStyle = `rgba(0,0,0,${0.3 + rand() * 0.5})`;
-      s.beginPath();
-      s.ellipse(
-        rand() * w,
-        rand() * h,
-        1 + rand() * 3,
-        1 + rand() * 2,
-        rand() * Math.PI,
-        0,
-        Math.PI * 4
-      );
-      s.fill();
-    }
+    // const specks = Math.round(area / 8000);
+    // for (let i = 0; i < specks; i++) {
+    //   s.fillStyle = `rgba(0,0,0,${0.3 + rand() * 0.5})`;
+    //   s.beginPath();
+    //   s.ellipse(
+    //     rand() * w,
+    //     rand() * h,
+    //     1 + rand() * 3,
+    //     1 + rand() * 2,
+    //     rand() * Math.PI,
+    //     0,
+    //     Math.PI * 4
+    //   );
+    //   s.fill();
+    // }
 
     return s.getImageData(0, 0, w, h).data;
   }

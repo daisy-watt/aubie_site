@@ -25,16 +25,11 @@ html {
 body {
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
   background-color: var(--paper);
+  background-image: url("assets/background-overlay.png");
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
-}
-
-.halftone {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  pointer-events: none;
 }
 
 .hero {
@@ -71,7 +66,7 @@ body {
   --dy: 0px;
   --scale: 1;
   position: absolute;
-  left: calc(100% + 1.1cqw - 0.7071cm);
+  left: calc(100% + 1.1cqw - 0.7071cm - 0.6667cm);
   top: calc(12.31cqw - var(--size) - 3cm + 0.7071cm);
   width: var(--size);
   height: var(--size);
@@ -212,6 +207,73 @@ body {
 .contact--google .contact__button:focus-visible {
   outline: 1px dotted #000;
   outline-offset: -5px;
+}
+
+.colour-footer {
+  position: fixed;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1cm;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 1rem;
+  background: var(--font-colour);
+}
+
+.colour-footer__email-wrap {
+  display: block;
+  position: relative;
+  width: clamp(150px, 20vw, 230px);
+  aspect-ratio: 770.91 / 61.22;
+}
+
+.colour-footer__email {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background-color: var(--paper);
+  background-image: url("assets/background-overlay.png");
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  -webkit-mask: url("assets/email-address.svg") center / contain no-repeat;
+  mask: url("assets/email-address.svg") center / contain no-repeat;
+  cursor: pointer;
+}
+
+.colour-footer__email-wrap::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 0.45rem);
+  right: 0;
+  padding: 0.3rem 0.5rem;
+  color: var(--paper);
+  background: #222;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(0.2rem);
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+}
+
+.colour-footer__email-wrap:hover::after,
+.colour-footer__email-wrap:focus-within::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.colour-footer__email:focus-visible {
+  outline: 2px solid var(--paper);
+  outline-offset: 3px;
 }
 
 .visually-hidden {

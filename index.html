@@ -9,8 +9,6 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <canvas class="halftone" id="halftone" aria-hidden="true"></canvas>
-
   <main class="hero">
     <div class="wordmark">
       <h1 class="wordmark__name" id="title">
@@ -26,12 +24,24 @@
       <a class="contact__button" href="mailto:auberginequin@gmail.com">Email me</a>
       <a
         class="contact__button"
-        href="mailto:auberginequin@gmail.com?subject=hello%20from%20subject%20line&amp;body=hello%20from%20body"
+        href="mailto:auberginequin@gmail.com?subject=Unbelieveable%20work%20opportunity%20!!&amp;body=hello%20from%20body"
       >I'm Feeling Lucky</a>
     </nav>
   </main>
 
-  <script src="halftone.js"></script>
+  <footer class="colour-footer">
+    <span class="colour-footer__email-wrap" data-tooltip="Copy to clipboard">
+      <button
+        class="colour-footer__email"
+        id="copy-email"
+        type="button"
+        data-email="auberginequin@gmail.com"
+        aria-label="Copy auberginequin@gmail.com to clipboard"
+      ></button>
+    </span>
+    <span class="visually-hidden" id="copy-email-status" aria-live="polite"></span>
+  </footer>
+
   <script src="script.js"></script>
 </body>
 </html>
