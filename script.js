@@ -59,3 +59,65 @@ input.addEventListener("input", (e) => {
   applyColour(e.target.value);
   localStorage.setItem(STORAGE_KEY, e.target.value);
 });
+
+// Drag the full stop around; a plain click still opens the picker.
+const RETURN_TO_REST = true;
+const DRAG_THRESHOLD = 4;
+const stop = document.querySelector(".wordmark__stop");
+let drag = null;
+let suppressClick = false;
+
+stop.addEventListener("pointerdown", (e) => {
+  if (e.button !== 0) return;
+  suppressClick = false;
+  const style = getComputedStyle(stop);
+  drag = {
+    id: e.pointerId,
+    startX: e.clientX,
+    startY: e.clientY,
+    baseX: parseFloat(style.getPropertyValue("--dx")) || 0,
+    baseY: parseFloat(style.getPropertyValue("--dy")) || 0,
+    moved: false,
+  };
+});
+
+stop.addEventListener("pointermove", (e) => {
+  if (!drag || e.pointerId !== drag.id) return;
+  const dx = e.clientX - drag.startX;
+  const dy = e.clientY - drag.startY;
+  if (!drag.moved) {
+    if (Math.hypot(dx, dy) < DRAG_THRESHOLD) return;
+    drag.moved = true;
+    stop.setPointerCapture(e.pointerId);
+    stop.classList.add("is-dragging");
+  }
+  stop.style.setProperty("--dx", `${drag.baseX + dx}px`);
+  stop.style.setProperty("--dy", `${drag.baseY + dy}px`);
+});
+
+function endDrag(e) {
+  if (!drag || e.pointerId !== drag.id) return;
+  if (drag.moved) {
+    suppressClick = true;
+    stop.classList.remove("is-dragging");
+    if (RETURN_TO_REST) {
+      stop.style.setProperty("--dx", "0px");
+      stop.style.setProperty("--dy", "0px");
+    }
+  }
+  drag = null;
+}
+
+stop.addEventListener("pointerup", endDrag);
+stop.addEventListener("pointercancel", endDrag);
+
+stop.addEventListener(
+  "click",
+  (e) => {
+    if (!suppressClick) return;
+    suppressClick = false;
+    e.preventDefault();
+    e.stopPropagation();
+  },
+  true
+);
